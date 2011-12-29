@@ -22,10 +22,10 @@ nginx.conf :
 
 ####server_tag 
 
-syntax: server_tag strings 
+**syntax:** server_tag strings 
 
-default: nginx [version] 
+**default:**  nginx [version] 
 
-context: server 
+**context:** server 
 
-description: server_tag is used to specify the Server name 
+**description:** server_tag is used to specify the Server name 
