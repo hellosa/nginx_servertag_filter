@@ -1,0 +1,31 @@
+## VERSION
+
+nginx_servertag_filter is a filter module which can modify the Server line of the response header. Just like Lighttpd's "server.tag". 
+
+To install, compile nginx with the following option: 
+
+
+    --add-module=/path/to/this/directory
+
+
+## CONFIG EXAMPLE
+
+nginx.conf : 
+
+    server { 
+        ... 
+        server_tag hello ; 
+        ... 
+        location / {...} 
+    }
+## DIRECTIVES
+
+####server_tag 
+
+syntax: server_tag strings 
+
+default: nginx [version] 
+
+context: server 
+
+description: server_tag is used to specify the Server name 
