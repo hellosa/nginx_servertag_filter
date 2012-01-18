@@ -64,20 +64,19 @@ static ngx_http_output_header_filter_pt  ngx_http_next_header_filter;
 static ngx_int_t
 ngx_http_servertag_header_filter(ngx_http_request_t *r)
 {
-    ngx_http_servertag_filter_srv_conf_t *tfcf ;
+    ngx_http_servertag_filter_srv_conf_t *tfcf;
     tfcf = ngx_http_get_module_srv_conf(r, ngx_http_servertag_filter_module);
 
-    if (ngx_strcmp(tfcf->tag.data , "") == 0 ){
-        return ngx_http_next_header_filter(r);
+    if (ngx_strcmp(tfcf->tag.data, "") != 0) {
+        
+        if (r->headers_out.server == NULL) {
+
+            r->headers_out.server = ngx_list_push(&r->headers_out.headers);
+            r->headers_out.server->hash = 1;
+            ngx_str_set(&r->headers_out.server->key, "Server");
+        }
+        r->headers_out.server->value = tfcf->tag;
     }
-
-    r->headers_out.server = ngx_list_push(&r->headers_out.headers) ;
-    r->headers_out.server->hash = 1;
-    r->headers_out.server->key.len = sizeof("Server") - 1;
-    r->headers_out.server->key.data = (u_char *) "Server";
-    r->headers_out.server->value.len = tfcf->tag.len ;
-    r->headers_out.server->value.data = tfcf->tag.data ;
-
     return ngx_http_next_header_filter(r);
 }
 
